@@ -7,9 +7,12 @@ llr = function(x, y, z, omega) {
 
 
 compute_f_hat = function(z, x, y, omega) {
-  Wz = make_weight_matrix(z, x, omega)
+  # Wz = make_weight_matrix(z, x, omega) #original code
+  Wz = diag(make_weight_matrix(z, x, omega)) #changed so that it is vector of weights
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y
+  # f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y #original code
+  #used apply function in place of "Wz %*%...."
+  f_hat = c(1, z) %*% solve(t(X) %*% apply(X, 2, function(Xcol){Wz * Xcol})) %*% t(X) %*% apply(as.matrix(y), 2, function(Xcol) {Wz*Xcol})
   return(f_hat)
 }
 
