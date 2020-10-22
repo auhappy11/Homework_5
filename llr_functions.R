@@ -13,7 +13,7 @@ compute_f_hat = function(z, x, y, omega) {
   return(f_hat)
 }
 
-make_weight_matrix = function(z, x, y, omega) {
+make_weight_matrix = function(z, x, omega) {
   x_1 = abs(x - z) / omega
   x_r = sapply(x_1, W)
   weight_matrix = diag(x_r)
