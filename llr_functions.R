@@ -25,7 +25,7 @@ make_weight_matrix = function(z, x, y, omega) {
 
 W = function(r) {
   if (abs(x_1) < 1) {
-    return((1 - abs(r) ** 3) ** 3)
+    return((1 - abs(x_1) ** 3) ** 3)
   } else {
     return(0)
   }
