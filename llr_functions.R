@@ -9,9 +9,10 @@ llr = function(x, y, z, omega) {
 compute_f_hat = function(z, x, y, omega) {
   Wz = diag(make_weight_matrix(z, x, omega))
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% sweep(X, 1, Wz, "%*%")) %*% t(X) %*% matrix(Wz * y)
+  f_hat = c(1, z) %*% solve(t(X) %*% sweep(X,1,Wz,"*")) %*% t(X) %*% matrix(Wz * y)
   return(f_hat)
 }
+
 
 make_weight_matrix = function(z, x, omega) {
   x_1 = abs(x - z) / omega
@@ -20,7 +21,7 @@ make_weight_matrix = function(z, x, omega) {
   return(weight_matrix)
 }
 
-W = function(r) {
+W = function(x_1) {
   if (abs(x_1) < 1) {
     return((1 - abs(x_1) ** 3) ** 3)
   } else {
